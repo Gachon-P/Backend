@@ -25,8 +25,10 @@ public class BusController {
         Bus bus = busService.createBus(busDto);
         if (bus == null) {
             map.put("status", 490);
+            map.put("errorMessage", "there is no user app id");
         } else {
             map.put("status", 200);
+            map.put("bus", bus);
         }
 
         return new ResponseEntity<>(map, HttpStatus.OK);
