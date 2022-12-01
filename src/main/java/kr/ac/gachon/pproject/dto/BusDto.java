@@ -7,7 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class busDto {
+public class BusDto {
+    private String appId;
     private String lineCode;
     private String stationCode;
 }

@@ -18,6 +18,9 @@ public class Bus {
     private Long id;
 
     @Column(nullable = false)
+    private String appId;
+
+    @Column(nullable = false)
     private String lineCode;
 
     @Column(nullable = false)
