@@ -22,6 +22,15 @@ public class UserService {
         return user;
     }
 
+    public boolean isUser(String appId) {
+        User user = this.userRepository.findByAppId(appId);
+        if (user == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public User connectFriday(User user) {
         User findUser = userRepository.findByMacId(user.getMacId());
         if (findUser == null || findUser.getAppId() != null) {
