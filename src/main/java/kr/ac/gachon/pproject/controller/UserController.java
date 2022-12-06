@@ -25,8 +25,17 @@ public class UserController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    @GetMapping("/default")
+    public ResponseEntity<Object> test() {
+        HashMap map = new HashMap<>();
+        map.put("json key", "json value");
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
     @PostMapping("/addUser")
     public ResponseEntity<Object> addUser(@RequestBody UserDto userDto) {
+        System.out.println(userDto);
         User user = userService.createUser(userDto);
         User saveUser = userService.connectFriday(user);
         HashMap map = new HashMap<>();

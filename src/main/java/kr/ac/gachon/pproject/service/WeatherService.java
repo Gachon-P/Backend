@@ -16,6 +16,9 @@ public class WeatherService {
     private final WeatherRepository weatherRepository;
 
     public Weather createWeather(WeatherDto weatherDto) {
+        if (weatherDto.getAppId() == "") {
+            return null;
+        }
         Weather validWeather = this.weatherRepository.findByAppId(weatherDto.getAppId());
         if (validWeather == null) {
             Weather weather = new Weather();
