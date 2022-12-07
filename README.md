@@ -44,3 +44,34 @@
 #  <Jira 이슈번호> #<키워드> #comment <코멘트>
 ex) GAC-6 #in-progress #comment Metropolitan Museum 소장 작품 이미지 다운로드 구현
 ```
+
+# Back-End setup for MAC
+## 1. <i>install mariadb with homebrew</i>
+```
+$ brew install mariadb
+```
+
+## 2. <i>create database and user in local mariadb</i>
+1. database 생성
+```
+MariaDB [(none)]> CREATE DATABASE [DATABASE NAME]
+```
+
+2. user 생성
+```
+MariaDB [(none)]> CREATE USER '[username]'@'localhost' IDENTIFIED BY '[password]';
+```
+
+3. 권한 부여
+```
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON [database name].* TO '[username]'@'localhost';
+```
+
+## 3. <i>create application.properties</i>
+application.properties
+```properties
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:mariadb://localhost:3306/[database name]
+spring.datasource.username=[username]
+spring.datasource.password=[user password]
+```

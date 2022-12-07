@@ -33,7 +33,7 @@ public class WeatherController {
     }
 
     @GetMapping("/get-coordinate")
-    public ResponseEntity<Object> getWeather(String appId) {
+    public ResponseEntity<Object> getCoordinate(@RequestBody String appId) {
         Weather weather = this.weatherService.getCoordinate(appId);
         HashMap map = new HashMap<>();
         if (weather == null) {
@@ -46,5 +46,24 @@ public class WeatherController {
         }
 
         return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @GetMapping("/getWeather")
+    public ResponseEntity<Object> getWeather(@RequestParam(value = "appId", required = false) String appId, @RequestParam(value = "macId", required = false) String macId) {
+        HashMap map = new HashMap<>();
+        System.out.println(appId);
+        System.out.println(macId);
+
+        if (appId == null && macId == null) {
+            map.put("status", 490);
+            map.put("errorMessage", "there is no value. you should input value appId or macId");
+            return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        if (appId == null && macId != null) {
+
+        }
+
+        return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
     }
 }

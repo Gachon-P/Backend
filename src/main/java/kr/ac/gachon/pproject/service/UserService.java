@@ -6,8 +6,17 @@ import kr.ac.gachon.pproject.repository.UserRepository;
 import kr.ac.gachon.pproject.temp.Constant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import javax.transaction.Transactional;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
+import java.util.HashMap;
 
 @Service
 @Transactional
@@ -17,7 +26,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User createUser(UserDto userDto) {
-        this.testFunc();
+        // this.testFunc();
         User user = new User();
         user.setMacId(userDto.getMacId());
         user.setAppId(userDto.getAppId());
