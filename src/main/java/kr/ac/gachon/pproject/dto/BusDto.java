@@ -9,6 +9,9 @@ import lombok.ToString;
 @ToString
 public class BusDto {
     private String appId;
-    private String lineCode;
-    private String stationCode;
+    private String lineNumber;
+    private String stationName;
+    private String stationId;
+    private String routeId;
+    private String staOrder;
 }

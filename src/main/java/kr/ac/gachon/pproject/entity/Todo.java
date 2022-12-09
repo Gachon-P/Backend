@@ -11,9 +11,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Bus {
+public class Todo {
     @Id
-    @Column(name = "bus_index")
+    @Column(name = "todo_index")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -21,17 +21,5 @@ public class Bus {
     private String appId;
 
     @Column(nullable = false)
-    private String lineNumber;
-
-    @Column(nullable = false)
-    private String stationName;
-
-    @Column(nullable = false)
-    private String stationId;
-
-    @Column(nullable = false)
-    private String routeId;
-
-    @Column(nullable = false)
-    private String staOrder;
+    private String todos;
 }

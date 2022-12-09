@@ -71,7 +71,7 @@ public class UserService {
     public String macIdToAppId(String macId) {
         User user = userRepository.findByMacId(macId);
         if (user == null) {
-            return null;
+            return "";
         } else {
             return user.getAppId();
         }

@@ -33,20 +33,45 @@ public class BusService {
     private final UserService userService;
 
     public Bus createBus(BusDto busDto) {
+        System.out.println(busDto.toString());
         boolean isUser = userService.isUser(busDto.getAppId());
         if (!isUser) {
             return null;
         }
-        Bus bus = new Bus();
-        bus.setAppId(busDto.getAppId());
-        bus.setLineCode(busDto.getLineCode());
-        bus.setStationCode(busDto.getStationCode());
 
-        Bus savedBus = busRepository.save(bus);
+        Bus validBus = busRepository.findByAppId(busDto.getAppId());
+        Bus savedBus;
+        if (validBus == null) {
+            Bus bus = new Bus();
+            bus.setAppId(busDto.getAppId());
+            bus.setLineNumber(busDto.getLineNumber());
+            bus.setStationName(busDto.getStationName());
+            bus.setStationId(busDto.getStationId());
+            bus.setRouteId(busDto.getRouteId());
+            bus.setStaOrder(busDto.getStaOrder());
+
+            System.out.println("bus entity");
+            System.out.println(bus.toString());
+            savedBus = busRepository.save(bus);
+        } else {
+            validBus.setLineNumber(busDto.getLineNumber());
+            validBus.setStationName(busDto.getStationName());
+            validBus.setStationId(busDto.getStationId());
+            validBus.setRouteId(busDto.getRouteId());
+            validBus.setStaOrder(busDto.getStaOrder());
+
+            savedBus = busRepository.save(validBus);
+        }
         return savedBus;
     }
 
+    public Bus getBusInfo(String appId) {
+        Bus bus = busRepository.findByAppId(appId);
+        return bus;
+    }
+
     public String getApiXml(String url) {
+        System.out.println(url);
         URI uri = URI.create(url);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -56,6 +81,7 @@ public class BusService {
         ResponseEntity<String> res = restTemplate.getForEntity(uri, String.class);
 //        String res = restTemplate.getForObject(uri, String.class);
 
+        System.out.println(res.getBody());
         return res.getBody();
     }
 
