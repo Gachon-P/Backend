@@ -44,10 +44,8 @@ public class BusController {
         String xml = busService.getApiXml(apiURL);
         try {
             List result = busService.xmlToJson(xml, "busRouteList");
-            System.out.println("result: " + result);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity<>(new HashMap<>(), HttpStatus.NOT_ACCEPTABLE);
         }
     }
@@ -61,10 +59,8 @@ public class BusController {
         String xml = busService.getApiXml(apiURL);
         try {
             List result = busService.xmlToJson(xml, "busRouteStationList");
-            System.out.println("result: " + result);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity<>(new HashMap<>(), HttpStatus.NOT_ACCEPTABLE);
         }
     }
@@ -80,7 +76,6 @@ public class BusController {
         String xml = busService.getApiXml(apiURL);
         try {
             List result = busService.xmlToJson(xml, "busArrivalItem");
-            System.out.println("result: " + result);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);

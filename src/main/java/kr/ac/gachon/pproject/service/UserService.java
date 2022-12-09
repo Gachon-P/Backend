@@ -25,8 +25,13 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+
+    public User testUser() {
+        User user = userRepository.findByMacId(Constant.FRIDAY_MAC);
+        return user;
+    }
     public User createUser(UserDto userDto) {
-        // this.testFunc();
+        this.testFunc();
         User user = new User();
         user.setMacId(userDto.getMacId());
         user.setAppId(userDto.getAppId());
@@ -44,9 +49,6 @@ public class UserService {
 
     public User connectFriday(User user) {
         User findUser = userRepository.findByMacId(user.getMacId());
-        System.out.println("in connectFriday");
-        System.out.println(user);
-        System.out.println(findUser);
         if (findUser == null || findUser.getAppId() != null) {
             return null;
         } else {
@@ -63,6 +65,15 @@ public class UserService {
             User user = new User();
             user.setMacId(mac);
             userRepository.save(user);
+        }
+    }
+
+    public String macIdToAppId(String macId) {
+        User user = userRepository.findByMacId(macId);
+        if (user == null) {
+            return null;
+        } else {
+            return user.getAppId();
         }
     }
 }

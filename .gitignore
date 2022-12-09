@@ -35,3 +35,7 @@ build/
 # spring boot
 application.properties
 temp
+
+# for MAC
+.DS_Store
+src/.DS_Store

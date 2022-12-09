@@ -17,24 +17,22 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/test")
-    public ResponseEntity<Object> test(@RequestBody UserDto userDto) {
-        HashMap map = new HashMap<>();
-
-        map.put("test key", "test value");
-        return new ResponseEntity<>(map, HttpStatus.OK);
-    }
-
-    @GetMapping("/default")
     public ResponseEntity<Object> test() {
         HashMap map = new HashMap<>();
-        map.put("json key", "json value");
+        User user = userService.testUser();
 
+        if (user == null) {
+            map.put("error", "no user");
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+        map.put("appId", user.getAppId());
+        map.put("macId", user.getMacId());
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
 
     @PostMapping("/addUser")
     public ResponseEntity<Object> addUser(@RequestBody UserDto userDto) {
-        System.out.println(userDto);
         User user = userService.createUser(userDto);
         User saveUser = userService.connectFriday(user);
         HashMap map = new HashMap<>();

@@ -25,4 +25,7 @@ public class Weather {
 
     @Column(nullable = false)
     private double longitude;
+
+    @Column(nullable = false)
+    private String city;
 }

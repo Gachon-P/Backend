@@ -25,12 +25,14 @@ public class WeatherService {
             weather.setAppId(weatherDto.getAppId());
             weather.setLatitude(weatherDto.getLatitude());
             weather.setLongitude(weatherDto.getLongitude());
+            weather.setCity(weatherDto.getCity());
 
             Weather saveWeather = this.weatherRepository.save(weather);
             return saveWeather;
         } else {
             validWeather.setLatitude(weatherDto.getLatitude());
             validWeather.setLongitude(weatherDto.getLongitude());
+            validWeather.setCity(weatherDto.getCity());
 
             Weather saveWeather = this.weatherRepository.save(validWeather);
             return saveWeather;

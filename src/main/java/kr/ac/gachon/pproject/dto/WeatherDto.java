@@ -11,4 +11,5 @@ public class WeatherDto {
     private String appId;
     private double latitude;
     private double longitude;
+    private String city;
 }
