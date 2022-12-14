@@ -21,8 +21,11 @@ public class WeatherController {
     private final UserService userService;
     @PostMapping("/createWeather")
     public ResponseEntity<Object> createWeather(@RequestBody WeatherDto weatherDto) {
+        System.out.println("------- insert weather info -------");
+
         HashMap map = new HashMap<>();
 
+        System.out.println("weather > createWeather");
         Weather weather = this.weatherService.createWeather(weatherDto);
         if (weather == null) {
             map.put("status", 490);
@@ -31,6 +34,8 @@ public class WeatherController {
         }
         map.put("weather", weather);
 
+        System.out.println(weather);
+        System.out.println("-----------------------------------");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
@@ -53,6 +58,7 @@ public class WeatherController {
     @GetMapping("/getWeather")
     public ResponseEntity<Object> getWeather(@RequestParam(value = "appId", required = false) String appId, @RequestParam(value = "macId", required = false) String macId) {
         HashMap map = new HashMap<>();
+        System.out.println("------- search weather info -------");
 
         if (appId == null && macId == null) {
             map.put("status", 490);
@@ -71,18 +77,19 @@ public class WeatherController {
             convertedAppId = appId;
         }
 
-        if (convertedAppId == "") {
-            map.put("status", 490);
-            map.put("errorMessage", "app id is empty string.");
-        }
+//        if (convertedAppId == "") {
+//            map.put("status", 490);
+//            map.put("errorMessage", "app id is empty string.");
+//            return new ResponseEntity<>(map, HttpStatus.OK);
+//        }
 
         Weather weather = weatherService.getCoordinate(convertedAppId);
         double lat;
         double lon;
-        String city = "송파구";
+        String city = "화성시";
         if (weather == null) {
-            lat = 37.511336;
-            lon = 127.086262;
+            lat = 37.113175;
+            lon = 126.909386;
             map.put("isEmpty", true);
         } else {
             lat = weather.getLatitude();
@@ -106,8 +113,12 @@ public class WeatherController {
 
 
         // res.getBody() => in JS, JSON.parse(res.getBody()) 형태로 json 형식 변환 가능
+        map.put("status", 200);
         map.put("weatherInfo", res.getBody());
         map.put("city", city);
+
+        System.out.println(map);
+        System.out.println("-----------------------------------");
 
         return new ResponseEntity<>(map, HttpStatus.OK);
     }

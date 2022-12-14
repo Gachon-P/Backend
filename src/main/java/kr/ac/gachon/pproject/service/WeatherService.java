@@ -16,6 +16,7 @@ public class WeatherService {
     private final WeatherRepository weatherRepository;
 
     public Weather createWeather(WeatherDto weatherDto) {
+        System.out.println(weatherDto.toString());
         if (weatherDto.getAppId() == "") {
             return null;
         }

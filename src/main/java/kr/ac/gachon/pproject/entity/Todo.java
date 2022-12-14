@@ -7,7 +7,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "todo")
 @Getter
 @Setter
 @ToString
@@ -20,6 +20,7 @@ public class Todo {
     @Column(nullable = false)
     private String appId;
 
+    @Lob
     @Column(nullable = false)
     private String todos;
 }

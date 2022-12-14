@@ -33,7 +33,6 @@ public class BusService {
     private final UserService userService;
 
     public Bus createBus(BusDto busDto) {
-        System.out.println(busDto.toString());
         boolean isUser = userService.isUser(busDto.getAppId());
         if (!isUser) {
             return null;
@@ -50,8 +49,6 @@ public class BusService {
             bus.setRouteId(busDto.getRouteId());
             bus.setStaOrder(busDto.getStaOrder());
 
-            System.out.println("bus entity");
-            System.out.println(bus.toString());
             savedBus = busRepository.save(bus);
         } else {
             validBus.setLineNumber(busDto.getLineNumber());
@@ -140,8 +137,6 @@ public class BusService {
             e.printStackTrace();
             throw new Exception();
         }
-        System.out.println("======= result =======");
-        System.out.println(list);
         return list;
     }
 }

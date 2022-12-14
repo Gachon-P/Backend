@@ -3,6 +3,7 @@ package kr.ac.gachon.pproject.controller;
 import kr.ac.gachon.pproject.dto.UserDto;
 import kr.ac.gachon.pproject.entity.User;
 import kr.ac.gachon.pproject.service.UserService;
+import kr.ac.gachon.pproject.temp.Constant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,9 @@ public class UserController {
 
     @PostMapping("/addUser")
     public ResponseEntity<Object> addUser(@RequestBody UserDto userDto) {
+        if (userDto.getMacId() == null) {
+            userDto.setMacId(Constant.FRIDAY_MAC);
+        }
         User user = userService.createUser(userDto);
         User saveUser = userService.connectFriday(user);
         HashMap map = new HashMap<>();

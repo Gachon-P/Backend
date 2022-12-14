@@ -23,6 +23,7 @@ public class BusController {
     private final UserService userService;
     @PostMapping("/updateBus")
     public ResponseEntity<Object> updateBus(@RequestBody BusDto busDto) {
+        System.out.println("------- insert bus data -------");
         HashMap map = new HashMap<>();
         Bus bus = busService.createBus(busDto);
         if (bus == null) {
@@ -32,6 +33,8 @@ public class BusController {
             map.put("status", 200);
             map.put("bus", bus);
         }
+        System.out.println(map);
+        System.out.println("-------------------------------");
 
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
@@ -55,6 +58,8 @@ public class BusController {
 
     @GetMapping("/busList")
     public ResponseEntity<Object> busList(@RequestParam(value = "lineNumber") String lineNumber) {
+        HashMap map = new HashMap<>();
+        System.out.println("------- search bus list -------");
         String apiURL = "http://apis.data.go.kr/6410000/busrouteservice/getBusRouteList"
                 + "?serviceKey=" + Constant.DATA_API_KEY_ENCODING
                 + "&keyword=" + lineNumber;
@@ -62,7 +67,11 @@ public class BusController {
         String xml = busService.getApiXml(apiURL);
         try {
             List result = busService.xmlToJson(xml, "busRouteList");
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            System.out.println(result);
+            System.out.println("-------------------------------");
+            map.put("status", 200);
+            map.put("busList", result);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new HashMap<>(), HttpStatus.NOT_ACCEPTABLE);
         }
@@ -70,6 +79,9 @@ public class BusController {
 
     @GetMapping("/busStation")
     public ResponseEntity<Object> busStation(@RequestParam(value = "routeId") String routeId) {
+        System.out.println("------- search bus station list -------");
+        HashMap map = new HashMap<>();
+
         String apiURL = "http://apis.data.go.kr/6410000/busrouteservice/getBusRouteStationList"
                 + "?serviceKey=" + Constant.DATA_API_KEY_ENCODING
                 + "&routeId=" + routeId;
@@ -77,7 +89,11 @@ public class BusController {
         String xml = busService.getApiXml(apiURL);
         try {
             List result = busService.xmlToJson(xml, "busRouteStationList");
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            System.out.println(result);
+            System.out.println("---------------------------------------");
+            map.put("status", 200);
+            map.put("busStationList", result);
+            return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new HashMap<>(), HttpStatus.NOT_ACCEPTABLE);
         }
@@ -85,6 +101,8 @@ public class BusController {
 
     @GetMapping("/busArrival")
     public ResponseEntity<Object> busArrival(@RequestParam(value = "appId", required = false) String appId, @RequestParam(value = "macId", required = false) String macId) {
+        System.out.println("------- search realtime bus arrival info -------");
+
         HashMap map = new HashMap<>();
 
         if (appId == null && macId == null) {
@@ -127,11 +145,22 @@ public class BusController {
 
         try {
             List result = busService.xmlToJson(xml, "busArrivalItem");
-            map.put("arrivalInfo", result);
-            map.put("stationName", bus.getStationName());
-            map.put("lineNumber", bus.getLineNumber());
+            if (result == null) {
+                map.put("status", 490);
+                map.put("arrivalInfo", null);
+                map.put("stationName", null);
+                map.put("lineNumber", null);
+            } else {
+                map.put("status", 200);
+                map.put("arrivalInfo", result);
+                map.put("stationName", bus.getStationName());
+                map.put("lineNumber", bus.getLineNumber());
+            }
+            System.out.println(map);
+            System.out.println("------------------------------------------------");
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println("BusController > busArrival Exception:");
             System.out.println(e);
             return new ResponseEntity<>(new HashMap<>(), HttpStatus.NOT_ACCEPTABLE);
         }

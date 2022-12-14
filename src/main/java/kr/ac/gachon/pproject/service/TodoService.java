@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class TodoService {
-    public static TodoRepository todoRepository;
+    public final TodoRepository todoRepository;
 
     public Todo saveToDo(TodoDto todoDto) {
         Todo loadedToDo = todoRepository.findByAppId(todoDto.getAppId());

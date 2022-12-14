@@ -20,6 +20,8 @@ public class TodoController {
     private final UserService userService;
     @GetMapping("/getToDo")
     public ResponseEntity<Object> getToDo(@RequestParam(value = "appId", required = false) String appId, @RequestParam(value = "macId", required = false) String macId) {
+        System.out.println("------- get to do list -------");
+
         HashMap map = new HashMap<>();
 
         if (appId == null && macId == null) {
@@ -45,22 +47,35 @@ public class TodoController {
             return new ResponseEntity<>(map, HttpStatus.NOT_ACCEPTABLE);
         }
 
-        Todo savedToDos = todoService.getToDo(appId);
+        Todo savedToDos = todoService.getToDo(convertedAppId);
         if (savedToDos == null) {
             map.put("status", 490);
-            map.put("errorMessage", "there is no bus info. please add bus info");
+            map.put("errorMessage", "there is no todo info. please add bus info");
 
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
-        map.put("todos", savedToDos);
+        map.put("todoInfo", savedToDos);
+        map.put("status", 200);
+        System.out.println(map);
+        System.out.println("------------------------------");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @PostMapping("/updateToDo")
     public ResponseEntity<Object> updateToDo(@RequestBody TodoDto todoDto) {
+        System.out.println("------- update todo list -------");
+
         HashMap map = new HashMap<>();
         Todo savedTodo =  todoService.saveToDo(todoDto);
         map.put("savedTodos", savedTodo);
+        map.put("status", 200);
+        System.out.println(map);
+        System.out.println("--------------------------------");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
+//    @PostMapping("/fridayToDo")
+//    public ResponseEntity<Object> fridayToDo(@RequestBody TodoDto todoDto) {
+//
+//    }
 }
